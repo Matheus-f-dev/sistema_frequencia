@@ -18,7 +18,7 @@ O EduControl é uma solução empresarial completa para instituições de ensino
 - Relatórios em tempo real com métricas de performance
 - Identificação automática de alunos em risco
 - Estatísticas visuais com barras de progresso
-- Exportação de dados em formato CSV
+
 
 ### 🔧 **Funcionalidades Técnicas**
 - API REST robusta com documentação automática
@@ -66,7 +66,7 @@ python main.py
 ### 3. **Relatórios e Analytics**
 - Visualize estatísticas em tempo real
 - Identifique alunos com frequência abaixo de 75%
-- Exporte relatórios em CSV para análises externas
+
 
 ## 🛠️ Arquitetura Técnica
 
@@ -112,7 +112,7 @@ python test_sistema.py
 | `POST` | `/api/v1/sessoes/` | Criar sessão de aula |
 | `POST` | `/api/v1/frequencias/lote/` | Registrar frequências |
 | `GET` | `/api/v1/relatorio/turma/{id}` | Relatório da turma |
-| `GET` | `/api/v1/exportar/turma/{id}` | Exportar CSV |
+
 
 ## 💼 Casos de Uso Empresariais
 
