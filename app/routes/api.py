@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.schemas import TurmaCreate, AlunoCreate, SessaoCreate, FrequenciaLote, DisciplinaCreate, MatricularAluno, FrequenciaIndividual
 from app.services.frequencia_service import FrequenciaService
-from fastapi.responses import FileResponse
 from typing import List
 import logging
 
@@ -81,20 +80,3 @@ def relatorio_aluno_disciplina(aluno_id: int, disciplina_id: int, db: Session = 
 def relatorio_turma(turma_id: int, db: Session = Depends(get_db)):
     return FrequenciaService.relatorio_turma(db, turma_id)
 
-@router.get("/exportar/turma/{turma_id}")
-def exportar_csv_turma(turma_id: int, db: Session = Depends(get_db)):
-    try:
-        import os
-        filename = f"relatorio_turma_{turma_id}.csv"
-        filepath = FrequenciaService.exportar_csv(db, turma_id, filename)
-        
-        if not os.path.exists(filepath):
-            raise HTTPException(status_code=404, detail="Arquivo não encontrado")
-        
-        return FileResponse(
-            path=filepath,
-            filename=filename,
-            media_type='text/csv'
-        )
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao gerar arquivo: {str(e)}")

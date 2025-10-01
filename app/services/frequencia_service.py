@@ -2,7 +2,6 @@ from sqlalchemy.orm import Session
 from app.database import Turma, Aluno, Sessao, Frequencia, Disciplina, aluno_disciplina
 from app.schemas import TurmaCreate, AlunoCreate, SessaoCreate, FrequenciaCreate, DisciplinaCreate, MatricularAluno, FrequenciaIndividual
 from datetime import datetime, timedelta
-import csv
 import json
 from typing import List, Dict
 
@@ -229,25 +228,3 @@ class FrequenciaService:
             print(f"Erro ao gerar relatório: {e}")
             return []
     
-    @staticmethod
-    def exportar_csv(db: Session, turma_id: int, filename: str):
-        try:
-            import os
-            relatorio = FrequenciaService.relatorio_turma(db, turma_id)
-            
-            if not relatorio:
-                raise ValueError("Nenhum dado encontrado para exportação")
-            
-            # Criar diretório data se não existir
-            os.makedirs("data", exist_ok=True)
-            filepath = os.path.abspath(f"data/{filename}")
-            
-            with open(filepath, 'w', newline='', encoding='utf-8') as csvfile:
-                fieldnames = ['nome', 'matricula', 'total_sessoes', 'presencas', 'faltas', 'faltas_justificadas', 'percentual_presenca']
-                writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-                writer.writeheader()
-                writer.writerows(relatorio)
-            
-            return filepath
-        except Exception as e:
-            raise Exception(f"Erro ao exportar CSV: {str(e)}")
